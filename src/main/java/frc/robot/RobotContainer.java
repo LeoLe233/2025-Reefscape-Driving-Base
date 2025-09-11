@@ -38,10 +38,10 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final SwerveSubsystem drivebase = new SwerveSubsystem(new File(Filesystem.getDeployDirectory(),
       "swerve/neo"));
-  private final Climber climber = new Climber();
-  private final Elevator elevator = new Elevator();
-  private final Algae algae = new Algae();
-  private final Intake intake = new Intake();
+  // private final Climber climber = new Climber();
+  // private final Elevator elevator = new Elevator();
+  // private final Algae algae = new Algae();
+  // private final Intake intake = new Intake();
 
   /**
    * Converts driver input into a field-relative ChassisSpeeds that is controlled
@@ -132,62 +132,62 @@ public class RobotContainer {
     Command driveSetpointGenKeyboard = drivebase.driveWithSetpointGeneratorFieldRelative(driveDirectAngleKeyboard);
 
     if (RobotBase.isSimulation()) {
-      drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
-    } else {
-      drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
+    //   drivebase.setDefaultCommand(driveFieldOrientedDirectAngleKeyboard);
+    // } else {
+    //   drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity);
     }
 
     if (Robot.isSimulation()) {
-      driverXbox.start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
-      driverXbox.button(1).whileTrue(drivebase.sysIdDriveMotorCommand());
+      // driverXbox.start().onTrue(Commands.runOnce(() -> drivebase.resetOdometry(new Pose2d(3, 3, new Rotation2d()))));
+      // driverXbox.button(1).whileTrue(drivebase.sysIdDriveMotorCommand());
 
     }
     if (DriverStation.isTest()) {
-      drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity); // Overrides drive command above!
+      // drivebase.setDefaultCommand(driveFieldOrientedAngularVelocity); // Overrides drive command above!
 
-      driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
-      driverXbox.y().whileTrue(drivebase.driveToDistanceCommand(1.0, 0.2));
-      driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
-      driverXbox.back().whileTrue(drivebase.centerModulesCommand());
-      driverXbox.leftBumper().onTrue(Commands.none());
-      driverXbox.rightBumper().onTrue(Commands.none());
+      // driverXbox.x().whileTrue(Commands.runOnce(drivebase::lock, drivebase).repeatedly());
+      // driverXbox.y().whileTrue(drivebase.driveToDistanceCommand(1.0, 0.2));
+      // driverXbox.start().onTrue((Commands.runOnce(drivebase::zeroGyro)));
+      // driverXbox.back().whileTrue(drivebase.centerModulesCommand());
+      // driverXbox.leftBumper().onTrue(Commands.none());
+      // driverXbox.rightBumper().onTrue(Commands.none());
     } else {
       // TELEOP
 
       /* Buttons - Climb / Gyro */
-      driverXbox.y().onTrue(new InstantCommand(() -> climber.down()));
+      // driverXbox.y().onTrue(new InstantCommand(() -> climber.down()));
 
-      driverXbox.a().onTrue(new InstantCommand(() -> climber.up()));
-      driverXbox.a().onFalse(new InstantCommand(() -> climber.stop()));
+      // driverXbox.a().onTrue(new InstantCommand(() -> climber.up()));
+      // driverXbox.a().onFalse(new InstantCommand(() -> climber.stop()));
 
-      driverXbox.b().onTrue(new InstantCommand(() -> drivebase.zeroGyro()));
+      // driverXbox.b().onTrue(new InstantCommand(() -> drivebase.zeroGyro()));
 
-      /* Bumpers - Pivot */
-      driverXbox.leftBumper().onTrue(new InstantCommand(() -> intake.down()));
-      driverXbox.leftBumper().onFalse(new InstantCommand(() -> intake.stopPivot()));
+      // /* Bumpers - Pivot */
+      // driverXbox.leftBumper().onTrue(new InstantCommand(() -> intake.down()));
+      // driverXbox.leftBumper().onFalse(new InstantCommand(() -> intake.stopPivot()));
       
-      driverXbox.rightBumper().onTrue(new InstantCommand(() -> intake.up()));
-      driverXbox.rightBumper().onFalse(new InstantCommand(() -> intake.stopPivot()));
+      // driverXbox.rightBumper().onTrue(new InstantCommand(() -> intake.up()));
+      // driverXbox.rightBumper().onFalse(new InstantCommand(() -> intake.stopPivot()));
  
-      /* Triggers - Elevator */
-      driverXbox.leftTrigger().onTrue(new InstantCommand(() -> elevator.down()));
-      driverXbox.leftTrigger().onFalse(new InstantCommand(() -> elevator.stop()));
+      // /* Triggers - Elevator */
+      // driverXbox.leftTrigger().onTrue(new InstantCommand(() -> elevator.down()));
+      // driverXbox.leftTrigger().onFalse(new InstantCommand(() -> elevator.stop()));
 
-      driverXbox.rightTrigger().onTrue(new InstantCommand(() -> elevator.up()));
-      driverXbox.rightTrigger().onFalse(new InstantCommand(() -> elevator.stop()));
+      // driverXbox.rightTrigger().onTrue(new InstantCommand(() -> elevator.up()));
+      // driverXbox.rightTrigger().onFalse(new InstantCommand(() -> elevator.stop()));
 
-      /* DPad - Coral / Algae */
-      driverXbox.povUp().onTrue(new InstantCommand(() -> intake.runIntake(false))); //coral in
-      driverXbox.povUp().onFalse(new InstantCommand(() -> intake.stopIntake()));
+      // /* DPad - Coral / Algae */
+      // driverXbox.povUp().onTrue(new InstantCommand(() -> intake.runIntake(false))); //coral in
+      // driverXbox.povUp().onFalse(new InstantCommand(() -> intake.stopIntake()));
 
-      driverXbox.povDown().onTrue(new InstantCommand(() -> intake.runIntake(true))); // coral out
-      driverXbox.povDown().onFalse(new InstantCommand(() -> intake.stopIntake()));
+      // driverXbox.povDown().onTrue(new InstantCommand(() -> intake.runIntake(true))); // coral out
+      // driverXbox.povDown().onFalse(new InstantCommand(() -> intake.stopIntake()));
 
-      driverXbox.povLeft().onTrue(new InstantCommand(() -> algae.in())); 
-      driverXbox.povLeft().onFalse(new InstantCommand(() -> algae.stop()));
+      // driverXbox.povLeft().onTrue(new InstantCommand(() -> algae.in())); 
+      // driverXbox.povLeft().onFalse(new InstantCommand(() -> algae.stop()));
 
-      driverXbox.povRight().onTrue(new InstantCommand(() -> algae.out())); 
-      driverXbox.povRight().onFalse(new InstantCommand(() -> algae.stop()));
+      // driverXbox.povRight().onTrue(new InstantCommand(() -> algae.out())); 
+      // driverXbox.povRight().onFalse(new InstantCommand(() -> algae.stop()));
     }
   }
 
